@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReceitasApp from './ReceitasApp';
 
 function Provider({ children }) {
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState('');
 
   const contextValue = {
     email,
