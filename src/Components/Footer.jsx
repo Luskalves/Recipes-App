@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import drinkIcon from '../images/drinkIcon.svg';
 import exploreIcon from '../images/exploreIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
@@ -6,49 +7,29 @@ import mealIcon from '../images/mealIcon.svg';
 function Footer() {
   return (
     <footer data-testid="footer" className="footer">
-      <label htmlFor="drinkButton">
-        <input
-          name="drinkButton"
-          type="button"
+      <Link to="/drinks">
+        <img
           src={ drinkIcon }
+          alt=""
           data-testid="drinks-bottom-btn"
         />
-      </label>
-      <label htmlFor="exploreButton">
-        <input
-          name="exploreButton"
-          type="button"
+      </Link>
+
+      <Link to="/explore">
+        <img
           src={ exploreIcon }
+          alt=""
           data-testid="explore-bottom-btn"
         />
-      </label>
+      </Link>
 
-      <label htmlFor="hmm">
-        <input
-          type="button"
+      <Link to="/food">
+        <img
           src={ mealIcon }
+          alt=""
           data-testid="food-bottom-btn"
         />
-      </label>
-      {/* <button
-        type="button"
-        src={ drinkIcon }
-      >
-        <img src={ drinkIcon } alt="" />
-      </button>
-      <button
-        type="button"
-        data-testid="explore-bottom-btn"
-      >
-        <img src={ exploreIcon } alt="" />
-      </button> */}
-
-      {/* <button
-        type="button"
-        data-testid="food-bottom-btn"
-      >
-        <img src={ mealIcon } alt="" />
-      </button> */}
+      </Link>
     </footer>
   );
 }
