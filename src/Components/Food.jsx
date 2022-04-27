@@ -1,8 +1,12 @@
 import React from 'react';
+import Footer from './Footer';
 
 function Food() {
   return (
-    <h1>Pagina Comidas</h1>
+    <div>
+      <h1>Pagina Comidas</h1>
+      <Footer />
+    </div>
   );
 }
 
