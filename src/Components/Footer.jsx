@@ -23,7 +23,7 @@ function Footer() {
         />
       </Link>
 
-      <Link to="/food">
+      <Link to="/foods">
         <img
           src={ mealIcon }
           alt=""
