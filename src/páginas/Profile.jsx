@@ -3,7 +3,7 @@ import Header from '../Components/Header';
 
 function Profile() {
   return (
-    <Header />
+    <Header componente="Profile" />
   );
 }
 

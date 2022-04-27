@@ -3,7 +3,7 @@ import Header from '../Components/Header';
 
 function DoneRecipes() {
   return (
-    <Header />
+    <Header componente="Done Recipes" />
   );
 }
 

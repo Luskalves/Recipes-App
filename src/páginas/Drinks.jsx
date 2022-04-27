@@ -3,7 +3,7 @@ import Header from '../Components/Header';
 
 function Drinks() {
   return (
-    <Header />
+    <Header componente="Drinks" />
   );
 }
 

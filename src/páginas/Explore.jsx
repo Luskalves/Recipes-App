@@ -3,7 +3,7 @@ import Header from '../Components/Header';
 
 function Explore() {
   return (
-    <Header />
+    <Header componente="Explore" />
   );
 }
 
