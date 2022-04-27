@@ -69,7 +69,7 @@
 
 .footer {
   display: flex;
-  justify-content: center;
   bottom: 0;
+  justify-content: center;
   position: fixed;
 }
