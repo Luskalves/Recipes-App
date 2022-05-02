@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import ReceitasApp from '../context/ReceitasApp';
 
 function Header({ componente }) {
   const [searchBtn, setSearchBtn] = useState(false);
-  const [searchInput, setSearchInput] = useState('');
+  const { searchInput, setSearchInput } = useContext(ReceitasApp);
 
   return (
     <header>
