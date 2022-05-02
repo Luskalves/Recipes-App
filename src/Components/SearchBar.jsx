@@ -31,22 +31,25 @@ function SearchBar({ history, componente }) {
     return <Card />;
   }
 
+  function alertGlobal(result) {
+    const TEXT_ALERT = 'Sorry, we haven\'t found any recipes for these filters.';
+    if (result.length === 0) {
+      global.alert(TEXT_ALERT);
+    }
+  }
+
   function drinkSearchHandleChange() {
-    const TEXT_ALERT = 'Sorry, we haven\'t found any recipes for these filters';
     switch (opcaoSelecionada) {
     case 'name':
       nameDrinkApi(searchInput).then((result) => {
-        if (result === []) {
-          global.alert(TEXT_ALERT);
-        }
+        console.log(result);
+        alertGlobal(result);
         setfilterSearchOption(result);
       });
       break;
     case 'ingredient':
       ingredientDrinkApi(searchInput).then((result) => {
-        if (result === []) {
-          global.alert(TEXT_ALERT);
-        }
+        alertGlobal(result);
         setfilterSearchOption(result);
       });
       break;
@@ -56,6 +59,7 @@ function SearchBar({ history, componente }) {
         return global.alert('Your search must have only 1 (one) character');
       }
       firstLetterDrinkApi(searchInput).then((result) => {
+        alertGlobal(result);
         setfilterSearchOption(result);
       });
       break;
@@ -68,11 +72,14 @@ function SearchBar({ history, componente }) {
       switch (opcaoSelecionada) {
       case 'name':
         nameSearchFetchApi(searchInput).then((result) => {
+          alertGlobal(result);
+          console.log(result);
           setfilterSearchOption(result);
         });
         break;
       case 'ingredient':
         igredientSearchFetchApi(searchInput).then((result) => {
+          alertGlobal(result);
           setfilterSearchOption(result);
         });
         break;
@@ -82,6 +89,7 @@ function SearchBar({ history, componente }) {
           return global.alert('Your search must have only 1 (one) character');
         }
         firstLetterSearchApi(searchInput).then((result) => {
+          alertGlobal(result);
           setfilterSearchOption(result);
         });
         break;
