@@ -4,10 +4,13 @@ import ReceitasApp from './ReceitasApp';
 
 function Provider({ children }) {
   const [email, setEmail] = useState('');
+  const [searchInput, setSearchInput] = useState('');
 
   const contextValue = {
     email,
+    searchInput,
     setEmail,
+    setSearchInput,
   };
 
   return (
