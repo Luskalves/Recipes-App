@@ -7,6 +7,7 @@ import firstLetterSearchApi from './Api/firstLetterSearchApi';
 import ingredientDrinkApi from './Api/ingredientDrinkApi';
 import nameDrinkApi from './Api/nameDrinkApi';
 import firstLetterDrinkApi from './Api/firstLetterDrinkApi';
+import Card from './Card';
 
 function SearchBar({ history, componente }) {
   const {
@@ -22,31 +23,30 @@ function SearchBar({ history, componente }) {
       if (filterSearchOption.length === 1) {
         history.push(`/drinks/${filterSearchOption[0].idDrink}`);
       }
-      return filterSearchOption.map((meal, index) => (
-        <h3 key={ index }>
-          {meal.strDrink}
-        </h3>
-      ));
+      return <Card />;
     }
     if (filterSearchOption.length === 1) {
       history.push(`/foods/${filterSearchOption[0].idMeal}`);
     }
-    return filterSearchOption.map((meal, index) => (
-      <h3 key={ index }>
-        {meal.strMeal}
-      </h3>
-    ));
+    return <Card />;
   }
 
   function drinkSearchHandleChange() {
+    const TEXT_ALERT = 'Sorry, we haven\'t found any recipes for these filters';
     switch (opcaoSelecionada) {
     case 'name':
       nameDrinkApi(searchInput).then((result) => {
+        if (result === []) {
+          global.alert(TEXT_ALERT);
+        }
         setfilterSearchOption(result);
       });
       break;
     case 'ingredient':
       ingredientDrinkApi(searchInput).then((result) => {
+        if (result === []) {
+          global.alert(TEXT_ALERT);
+        }
         setfilterSearchOption(result);
       });
       break;
