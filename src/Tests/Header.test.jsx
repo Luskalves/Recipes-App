@@ -74,7 +74,9 @@ describe('Testa o componente Header', () => {
     expect(profileBtn).toBeInTheDocument();
     expect(searchBtn).toBeInTheDocument();
 
-    history.push('/explore');
+    const exploreBtn = screen.getByTestId('explore-bottom-btn');
+    userEvent.click(exploreBtn);
+
     const { pathname } = history.location;
 
     expect(pathname).toBe('/explore');
@@ -112,4 +114,16 @@ describe('Testa o componente Header', () => {
       const title = screen.getByRole('heading', { level: 1 });
       expect(title).toBeInTheDocument();
     });
+
+  it('9- Verifica se consegue escrever no input de busca', () => {
+    renderWithRouter(<Drinks />);
+
+    const searchBtn = screen.getByTestId(SEARCH_TESTID);
+    userEvent.click(searchBtn);
+
+    const searchInput = screen.getByTestId('search-input');
+    userEvent.type(searchInput, 'teste');
+
+    expect(searchInput).toHaveValue('teste');
+  });
 });
