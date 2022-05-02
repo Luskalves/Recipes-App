@@ -1,25 +1,94 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
+import PropTypes from 'prop-types';
 import ReceitasApp from '../context/ReceitasApp';
 import nameSearchFetchApi from './Api/nameSearchFetchApi';
 import igredientSearchFetchApi from './Api/igredientSearchFetchApi';
+import firstLetterSearchApi from './Api/firstLetterSearchApi';
+import ingredientDrinkApi from './Api/ingredientDrinkApi';
+import nameDrinkApi from './Api/nameDrinkApi';
+import firstLetterDrinkApi from './Api/firstLetterDrinkApi';
 
-function SearchBar() {
+function SearchBar({ history, componente }) {
   const {
     filterSearchOption,
     setfilterSearchOption,
     searchInput,
+    setSearchInput,
   } = useContext(ReceitasApp);
+  const [opcaoSelecionada, setOpcaoSelecionada] = useState('');
 
-  function searchHandleChange({ target }) {
-    if (target.id === 'name') {
-      nameSearchFetchApi(searchInput).then((result) => {
-        setfilterSearchOption(result);
-      });
+  function checkRender() {
+    if (componente === 'Drinks') {
+      if (filterSearchOption.length === 1) {
+        history.push(`/drinks/${filterSearchOption[0].idDrink}`);
+      }
+      return filterSearchOption.map((meal, index) => (
+        <h3 key={ index }>
+          {meal.strDrink}
+        </h3>
+      ));
     }
-    if (target.id === 'ingredient') {
-      igredientSearchFetchApi().then((result) => {
+    if (filterSearchOption.length === 1) {
+      history.push(`/foods/${filterSearchOption[0].idMeal}`);
+    }
+    return filterSearchOption.map((meal, index) => (
+      <h3 key={ index }>
+        {meal.strMeal}
+      </h3>
+    ));
+  }
+
+  function drinkSearchHandleChange() {
+    switch (opcaoSelecionada) {
+    case 'name':
+      nameDrinkApi(searchInput).then((result) => {
         setfilterSearchOption(result);
       });
+      break;
+    case 'ingredient':
+      ingredientDrinkApi(searchInput).then((result) => {
+        setfilterSearchOption(result);
+      });
+      break;
+    case 'firstLetter':
+      if (searchInput.length > 1) {
+        setSearchInput('');
+        return global.alert('Your search must have only 1 (one) character');
+      }
+      firstLetterDrinkApi(searchInput).then((result) => {
+        setfilterSearchOption(result);
+      });
+      break;
+    default: return [];
+    }
+  }
+
+  function searchHandleChange() {
+    if (componente !== 'Drinks') {
+      switch (opcaoSelecionada) {
+      case 'name':
+        nameSearchFetchApi(searchInput).then((result) => {
+          setfilterSearchOption(result);
+        });
+        break;
+      case 'ingredient':
+        igredientSearchFetchApi(searchInput).then((result) => {
+          setfilterSearchOption(result);
+        });
+        break;
+      case 'firstLetter':
+        if (searchInput.length > 1) {
+          setSearchInput('');
+          return global.alert('Your search must have only 1 (one) character');
+        }
+        firstLetterSearchApi(searchInput).then((result) => {
+          setfilterSearchOption(result);
+        });
+        break;
+      default: return [];
+      }
+    } else {
+      drinkSearchHandleChange();
     }
   }
 
@@ -33,7 +102,7 @@ function SearchBar() {
             placeholder="Pesquise aqui..."
             name="filtro"
             id="ingredient"
-            onClick={ searchHandleChange }
+            onClick={ ({ target }) => setOpcaoSelecionada(target.id) }
           />
           Ingredient
         </label>
@@ -44,7 +113,7 @@ function SearchBar() {
             placeholder="Pesquise aqui..."
             name="filtro"
             id="name"
-            onClick={ searchHandleChange }
+            onClick={ ({ target }) => setOpcaoSelecionada(target.id) }
           />
           Name
         </label>
@@ -55,7 +124,7 @@ function SearchBar() {
             placeholder="Pesquise aqui..."
             name="filtro"
             id="firstLetter"
-            onClick={ searchHandleChange }
+            onClick={ ({ target }) => setOpcaoSelecionada(target.id) }
           />
           First Letter
         </label>
@@ -63,20 +132,21 @@ function SearchBar() {
         <button
           type="button"
           data-testid="exec-search-btn"
+          onClick={ searchHandleChange }
         >
           Search
         </button>
       </form>
       <div>
-        { filterSearchOption.map((meal, index) => (
-          <h3 key={ index }>
-            { meal.strMeal }
-          </h3>
-        ))}
-        {console.log(filterSearchOption)}
+        { checkRender() }
       </div>
     </>
   );
 }
+
+SearchBar.propTypes = {
+  componente: PropTypes.string.isRequired,
+  history: PropTypes.shape(Object).isRequired,
+};
 
 export default SearchBar;
