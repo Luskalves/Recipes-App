@@ -12,10 +12,11 @@ function Card() {
     setTeste,
     filterSearchOption,
     setfilterSearchOption,
-    categoryBtn,
-    setcategoryBtn,
+    // categoryBtn,
+    // setcategoryBtn,
   } = useContext(ReceitasApp);
   const [categoryOptions, setCategoryOptions] = useState([]);
+  const [foodButton, setFoodBtn] = useState('');
 
   function btnCategory() {
     foodCategoryCardApi().then((result) => {
@@ -24,13 +25,17 @@ function Card() {
   }
 
   function filterByCategory({ target }) {
-    setcategoryBtn(!categoryBtn);
-    return categoryBtn ? setfilterSearchOption([])
-      : (
+    if (target.name !== foodButton) {
+      setFoodBtn(target.name);
+      return (
         categoryFoodApi(target.value).then((result) => {
           setfilterSearchOption(result);
         })
       );
+    }
+    if (target.name === foodButton) {
+      setfilterSearchOption([]);
+    }
   }
 
   useEffect(() => {
@@ -50,6 +55,7 @@ function Card() {
         <button
           key={ index }
           type="button"
+          name={ value.strCategory }
           value={ value.strCategory }
           data-testid={ `${value.strCategory}-category-filter` }
           onClick={ filterByCategory }
@@ -60,6 +66,7 @@ function Card() {
       <button
         type="button"
         data-testid="All-category-filter"
+        name="all"
         onClick={ () => setfilterSearchOption([]) }
       >
         All

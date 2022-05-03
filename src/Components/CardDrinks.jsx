@@ -12,11 +12,10 @@ function CardDrinks() {
     drinks,
     setDrinks,
     setfilterSearchOption,
-    categoryBtn,
-    setcategoryBtn,
   } = useContext(ReceitasApp);
 
   const [categoryDrinkOptions, setCategoryDrinkOptions] = useState([]);
+  const [drinkButton, setDrinkBtn] = useState('');
 
   function btnCategory() {
     drinkCategoryCardApi().then((result) => {
@@ -25,13 +24,17 @@ function CardDrinks() {
   }
 
   function filterByCategory({ target }) {
-    setcategoryBtn(!categoryBtn);
-    return categoryBtn ? setfilterSearchOption([])
-      : (
+    if (target.name !== drinkButton) {
+      setDrinkBtn(target.name);
+      return (
         categoryDrinksApi(target.value).then((result) => {
           setfilterSearchOption(result);
         })
       );
+    }
+    if (target.name === drinkButton) {
+      setfilterSearchOption([]);
+    }
   }
 
   useEffect(() => {
@@ -47,6 +50,7 @@ function CardDrinks() {
         <button
           key={ index }
           type="button"
+          name={ value.strCategory }
           value={ value.strCategory }
           data-testid={ `${value.strCategory}-category-filter` }
           onClick={ filterByCategory }
