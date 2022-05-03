@@ -6,6 +6,8 @@ function Provider({ children }) {
   const [email, setEmail] = useState('');
   const [filterSearchOption, setfilterSearchOption] = useState([]);
   const [searchInput, setSearchInput] = useState('');
+  const [teste, setTeste] = useState([]);
+  const [drinks, setDrinks] = useState([]);
 
   const contextValue = {
     email,
@@ -14,6 +16,10 @@ function Provider({ children }) {
     setEmail,
     setfilterSearchOption,
     setSearchInput,
+    teste,
+    setTeste,
+    drinks,
+    setDrinks,
   };
 
   return (

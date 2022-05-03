@@ -1,33 +1,34 @@
 import React, { useContext, useState, useEffect } from 'react';
 import ReceitasApp from '../context/ReceitasApp';
-import foodCategoryCardApi from './Api/foodCategoryCardApi';
-import openApi from './Api/openApi';
+import openApiDrinks from './Api/openApiDrinks';
+import drinkCategoryCardApi from './Api/drinkCategoryCardApi';
 
-function Card() {
+function CardDrinks() {
   const MAX_CARDS = 12;
   const {
-    teste,
-    setTeste,
     filterSearchOption,
+    drinks,
+    setDrinks,
   } = useContext(ReceitasApp);
-  const [categoryOptions, setCategoryOptions] = useState([]);
+
+  const [categoryDrinkOptions, setCategoryDrinkOptions] = useState([]);
 
   function btnCategory() {
-    foodCategoryCardApi().then((result) => {
-      setCategoryOptions(result);
+    drinkCategoryCardApi().then((result) => {
+      setCategoryDrinkOptions(result);
     });
   }
 
   useEffect(() => {
     btnCategory();
-    openApi().then((result) => {
-      setTeste(result);
+    openApiDrinks().then((result) => {
+      setDrinks(result);
     });
   }, []);
 
   return (
     <div>
-      { !categoryOptions ? '' : categoryOptions.map((value, index) => (
+      { !categoryDrinkOptions ? '' : categoryDrinkOptions.map((value, index) => (
         <button
           key={ index }
           type="button"
@@ -37,7 +38,7 @@ function Card() {
         </button>
       ))}
       {filterSearchOption.length === 0
-        ? teste.slice(0, MAX_CARDS)
+        ? drinks.slice(0, MAX_CARDS)
           .map((value, index) => (
             <div
               key={ index }
@@ -46,13 +47,13 @@ function Card() {
               <img
                 data-testid={ `${index}-card-img` }
                 className="card-img"
-                src={ value.strMealThumb }
-                alt={ value.strMeal }
+                src={ value.strDrinkThumb }
+                alt={ value.strDrink }
               />
               <h3
                 data-testid={ `${index}-card-name` }
               >
-                { value.strMeal }
+                { value.strDrink }
               </h3>
             </div>
           ))
@@ -65,13 +66,13 @@ function Card() {
               <img
                 data-testid={ `${index}-card-img` }
                 className="card-img"
-                src={ value.strMealThumb }
-                alt={ value.strMeal }
+                src={ value.strDrinkThumb }
+                alt={ value.strDrink }
               />
               <h2
                 data-testid={ `${index}-card-name` }
               >
-                { value.strMeal }
+                { value.strDrink }
               </h2>
             </div>
           ))}
@@ -79,4 +80,4 @@ function Card() {
   );
 }
 
-export default Card;
+export default CardDrinks;
