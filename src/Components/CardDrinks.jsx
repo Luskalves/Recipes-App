@@ -1,18 +1,18 @@
 import React, { useContext, useEffect } from 'react';
 import ReceitasApp from '../context/ReceitasApp';
-import openApi from './Api/openApi';
+import openApiDrinks from './Api/openApiDrinks';
 
-function Card() {
+function CardDrinks() {
   const MAX_CARDS = 12;
   const {
-    teste,
-    setTeste,
     filterSearchOption,
+    drinks,
+    setDrinks,
   } = useContext(ReceitasApp);
 
   useEffect(() => {
-    openApi().then((result) => {
-      setTeste(result);
+    openApiDrinks().then((result) => {
+      setDrinks(result);
     });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -20,7 +20,7 @@ function Card() {
   return (
     <div>
       {filterSearchOption.length === 0
-        ? teste.slice(0, MAX_CARDS)
+        ? drinks.slice(0, MAX_CARDS)
           .map((value, index) => (
             <div
               key={ index }
@@ -29,13 +29,13 @@ function Card() {
               <img
                 data-testid={ `${index}-card-img` }
                 className="card-img"
-                src={ value.strMealThumb }
-                alt={ value.strMeal }
+                src={ value.strDrinkThumb }
+                alt={ value.strDrink }
               />
               <h3
                 data-testid={ `${index}-card-name` }
               >
-                { value.strMeal }
+                { value.strDrink }
               </h3>
             </div>
           ))
@@ -48,13 +48,13 @@ function Card() {
               <img
                 data-testid={ `${index}-card-img` }
                 className="card-img"
-                src={ value.strMealThumb }
-                alt={ value.strMeal }
+                src={ value.strDrinkThumb }
+                alt={ value.strDrink }
               />
               <h2
                 data-testid={ `${index}-card-name` }
               >
-                { value.strMeal }
+                { value.strDrink }
               </h2>
             </div>
           ))}
@@ -62,4 +62,4 @@ function Card() {
   );
 }
 
-export default Card;
+export default CardDrinks;

@@ -8,6 +8,7 @@ import ingredientDrinkApi from './Api/ingredientDrinkApi';
 import nameDrinkApi from './Api/nameDrinkApi';
 import firstLetterDrinkApi from './Api/firstLetterDrinkApi';
 import Card from './Card';
+import CardDrinks from './CardDrinks';
 
 function SearchBar({ history, componente }) {
   const {
@@ -24,7 +25,7 @@ function SearchBar({ history, componente }) {
       if (filterSearchOption.length === 1) {
         history.push(`/drinks/${filterSearchOption[0].idDrink}`);
       }
-      return <Card />;
+      return <CardDrinks />;
     }
     if (filterSearchOption.length === 1) {
       history.push(`/foods/${filterSearchOption[0].idMeal}`);
