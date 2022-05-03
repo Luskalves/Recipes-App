@@ -13,10 +13,11 @@ function Card() {
     filterSearchOption,
     setfilterSearchOption,
     // categoryBtn,
-    // setcategoryBtn,
+    setcategoryBtn,
+    setRecipeDetail,
   } = useContext(ReceitasApp);
   const [categoryOptions, setCategoryOptions] = useState([]);
-  const [foodButton, setFoodBtn] = useState('');
+  const [foodButton, setFoodBtn] = useState('beef');
 
   function btnCategory() {
     foodCategoryCardApi().then((result) => {
@@ -27,6 +28,7 @@ function Card() {
   function filterByCategory({ target }) {
     if (target.name !== foodButton) {
       setFoodBtn(target.name);
+      setcategoryBtn(true);
       return (
         categoryFoodApi(target.value).then((result) => {
           setfilterSearchOption(result);
@@ -35,6 +37,7 @@ function Card() {
     }
     if (target.name === foodButton) {
       setfilterSearchOption([]);
+      setcategoryBtn(false);
     }
   }
 
@@ -76,6 +79,7 @@ function Card() {
           .map((value, index) => (
             <div key={ index }>
               <Link
+                onClick={ () => setRecipeDetail(value) }
                 to={ `/foods/${value.idMeal}` }
                 data-testid={ `${index}-recipe-card` }
               >
@@ -99,6 +103,7 @@ function Card() {
               key={ index }
             >
               <Link
+                onClick={ () => setRecipeDetail(value) }
                 to={ `/foods/${value.idMeal}` }
                 data-testid={ `${index}-recipe-card` }
               >
