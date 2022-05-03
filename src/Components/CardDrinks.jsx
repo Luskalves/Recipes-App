@@ -9,6 +9,7 @@ function CardDrinks() {
     filterSearchOption,
     drinks,
     setDrinks,
+    setfilterSearchOption,
   } = useContext(ReceitasApp);
 
   const [categoryDrinkOptions, setCategoryDrinkOptions] = useState([]);
@@ -37,6 +38,13 @@ function CardDrinks() {
           { value.strCategory }
         </button>
       ))}
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ () => setfilterSearchOption([]) }
+      >
+        All
+      </button>
       {filterSearchOption.length === 0
         ? drinks.slice(0, MAX_CARDS)
           .map((value, index) => (

@@ -9,6 +9,7 @@ function Card() {
     teste,
     setTeste,
     filterSearchOption,
+    setfilterSearchOption,
   } = useContext(ReceitasApp);
   const [categoryOptions, setCategoryOptions] = useState([]);
 
@@ -25,6 +26,10 @@ function Card() {
     });
   }, []);
 
+  // function sendToCardDetails({ target }) {
+  //   console.log(target.value);
+  // }
+
   return (
     <div>
       { !categoryOptions ? '' : categoryOptions.map((value, index) => (
@@ -36,6 +41,13 @@ function Card() {
           { value.strCategory }
         </button>
       ))}
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ () => setfilterSearchOption([]) }
+      >
+        All
+      </button>
       {filterSearchOption.length === 0
         ? teste.slice(0, MAX_CARDS)
           .map((value, index) => (
