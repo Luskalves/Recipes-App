@@ -16,18 +16,19 @@ function SearchBar({ history, componente }) {
     setfilterSearchOption,
     searchInput,
     setSearchInput,
+    categoryBtn,
   } = useContext(ReceitasApp);
 
   const [opcaoSelecionada, setOpcaoSelecionada] = useState('');
 
   function checkRender() {
     if (componente === 'Drinks') {
-      if (filterSearchOption.length === 1) {
+      if (filterSearchOption.length === 1 && !categoryBtn) {
         history.push(`/drinks/${filterSearchOption[0].idDrink}`);
       }
       return <CardDrinks />;
     }
-    if (filterSearchOption.length === 1) {
+    if (filterSearchOption.length === 1 && !categoryBtn) {
       history.push(`/foods/${filterSearchOption[0].idMeal}`);
     }
     return <Card />;

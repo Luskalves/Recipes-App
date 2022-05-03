@@ -12,6 +12,8 @@ function Card() {
     setTeste,
     filterSearchOption,
     setfilterSearchOption,
+    categoryBtn,
+    setcategoryBtn,
   } = useContext(ReceitasApp);
   const [categoryOptions, setCategoryOptions] = useState([]);
 
@@ -22,9 +24,13 @@ function Card() {
   }
 
   function filterByCategory({ target }) {
-    categoryFoodApi(target.value).then((result) => {
-      setTeste(result);
-    });
+    setcategoryBtn(!categoryBtn);
+    return categoryBtn ? setfilterSearchOption([])
+      : (
+        categoryFoodApi(target.value).then((result) => {
+          setfilterSearchOption(result);
+        })
+      );
   }
 
   useEffect(() => {

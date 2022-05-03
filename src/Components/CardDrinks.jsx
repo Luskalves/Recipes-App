@@ -12,6 +12,8 @@ function CardDrinks() {
     drinks,
     setDrinks,
     setfilterSearchOption,
+    categoryBtn,
+    setcategoryBtn,
   } = useContext(ReceitasApp);
 
   const [categoryDrinkOptions, setCategoryDrinkOptions] = useState([]);
@@ -23,9 +25,13 @@ function CardDrinks() {
   }
 
   function filterByCategory({ target }) {
-    categoryDrinksApi(target.value).then((result) => {
-      setDrinks(result);
-    });
+    setcategoryBtn(!categoryBtn);
+    return categoryBtn ? setfilterSearchOption([])
+      : (
+        categoryDrinksApi(target.value).then((result) => {
+          setfilterSearchOption(result);
+        })
+      );
   }
 
   useEffect(() => {
