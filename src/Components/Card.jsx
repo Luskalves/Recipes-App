@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import ReceitasApp from '../context/ReceitasApp';
 import foodCategoryCardApi from './Api/foodCategoryCardApi';
 import categoryFoodApi from './Api/categoryFoodApi';
@@ -60,40 +61,46 @@ function Card() {
       {filterSearchOption.length === 0
         ? teste.slice(0, MAX_CARDS)
           .map((value, index) => (
-            <div
-              key={ index }
-              data-testid={ `${index}-recipe-card` }
-            >
-              <img
-                data-testid={ `${index}-card-img` }
-                className="card-img"
-                src={ value.strMealThumb }
-                alt={ value.strMeal }
-              />
-              <h3
-                data-testid={ `${index}-card-name` }
+            <div key={ index }>
+              <Link
+                to={ `/foods/${value.idMeal}` }
+                data-testid={ `${index}-recipe-card` }
               >
-                { value.strMeal }
-              </h3>
+                <img
+                  data-testid={ `${index}-card-img` }
+                  className="card-img"
+                  src={ value.strMealThumb }
+                  alt={ value.strMeal }
+                />
+                <h3
+                  data-testid={ `${index}-card-name` }
+                >
+                  { value.strMeal }
+                </h3>
+              </Link>
             </div>
           ))
         : filterSearchOption.slice(0, MAX_CARDS)
           .map((value, index) => (
             <div
               key={ index }
-              data-testid={ `${index}-recipe-card` }
             >
-              <img
-                data-testid={ `${index}-card-img` }
-                className="card-img"
-                src={ value.strMealThumb }
-                alt={ value.strMeal }
-              />
-              <h2
-                data-testid={ `${index}-card-name` }
+              <Link
+                to={ `/foods/${value.idMeal}` }
+                data-testid={ `${index}-recipe-card` }
               >
-                { value.strMeal }
-              </h2>
+                <img
+                  data-testid={ `${index}-card-img` }
+                  className="card-img"
+                  src={ value.strMealThumb }
+                  alt={ value.strMeal }
+                />
+                <h2
+                  data-testid={ `${index}-card-name` }
+                >
+                  { value.strMeal }
+                </h2>
+              </Link>
             </div>
           ))}
       {/* { console.log(filterSearchOption) } */}
