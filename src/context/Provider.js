@@ -10,8 +10,8 @@ function Provider({ children }) {
   const contextValue = {
     email,
     searchInput,
-    setEmail,
     filterSearchOption,
+    setEmail,
     setfilterSearchOption,
     setSearchInput,
   };

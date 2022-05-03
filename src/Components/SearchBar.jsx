@@ -16,6 +16,7 @@ function SearchBar({ history, componente }) {
     searchInput,
     setSearchInput,
   } = useContext(ReceitasApp);
+
   const [opcaoSelecionada, setOpcaoSelecionada] = useState('');
 
   function checkRender() {
@@ -73,7 +74,6 @@ function SearchBar({ history, componente }) {
       case 'name':
         nameSearchFetchApi(searchInput).then((result) => {
           alertGlobal(result);
-          console.log(result);
           setfilterSearchOption(result);
         });
         break;
