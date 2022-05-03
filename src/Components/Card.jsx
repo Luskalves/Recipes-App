@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import ReceitasApp from '../context/ReceitasApp';
 import foodCategoryCardApi from './Api/foodCategoryCardApi';
+import categoryFoodApi from './Api/categoryFoodApi';
 import openApi from './Api/openApi';
 
 function Card() {
@@ -18,6 +19,12 @@ function Card() {
     });
   }
 
+  function filterByCategory({ target }) {
+    categoryFoodApi(target.value).then((result) => {
+      setTeste(result);
+    });
+  }
+
   useEffect(() => {
     btnCategory();
     openApi().then((result) => {
@@ -31,7 +38,9 @@ function Card() {
         <button
           key={ index }
           type="button"
+          value={ value.strCategory }
           data-testid={ `${value.strCategory}-category-filter` }
+          onClick={ filterByCategory }
         >
           { value.strCategory }
         </button>
@@ -75,6 +84,7 @@ function Card() {
               </h2>
             </div>
           ))}
+      {/* { console.log(filterSearchOption) } */}
     </div>
   );
 }
