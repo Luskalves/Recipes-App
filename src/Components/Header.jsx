@@ -1,13 +1,14 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import ReceitasApp from '../context/ReceitasApp';
+import styles from '../css/Header.module.css';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
-import ReceitasApp from '../context/ReceitasApp';
 
 function Header({ componente }) {
-  const [searchBtn, setSearchBtn] = useState(false);
   const { searchInput, setSearchInput } = useContext(ReceitasApp);
+  const [searchBtn, setSearchBtn] = useState(false);
 
   return (
     <header>
@@ -17,7 +18,11 @@ function Header({ componente }) {
       </Link>
       { componente === 'Foods' || componente === 'Explore Nationalities'
         || componente === 'Drinks' ? (
-          <button type="button" onClick={ () => setSearchBtn(!searchBtn) }>
+          <button
+            type="button"
+            className={ styles.search_btn }
+            onClick={ () => setSearchBtn(!searchBtn) }
+          >
             <img src={ searchIcon } alt="search" data-testid="search-top-btn" />
           </button>)
         : '' }

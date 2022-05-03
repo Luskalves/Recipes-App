@@ -1,4 +1,5 @@
-import React, { useContext, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ReceitasApp from '../context/ReceitasApp';
 
@@ -10,22 +11,15 @@ function TelaLogin({ history }) {
   function validateEmail() {
     const PASSWORD_LIMIT = 6;
     const re = /\S+@\S+\.\S+/;
-    // console.log(email);
-    // console.log(password);
-    if (re.test(email) && password.length >= PASSWORD_LIMIT) {
-      setBtnDisable(!btnDisable);
+
+    if (re.test(email) && password.length > PASSWORD_LIMIT) {
+      setBtnDisable(false);
     }
   }
 
-  function emailSetState(e) {
-    setEmail(e.target.value);
+  useEffect(() => {
     validateEmail();
-  }
-
-  function passwordSetState(e) {
-    setPassword(e.target.value);
-    validateEmail();
-  }
+  }, [email, password]);
 
   function btnSubmit() {
     const emailSubmit = { email };
@@ -41,13 +35,13 @@ function TelaLogin({ history }) {
         type="text"
         data-testid="email-input"
         value={ email }
-        onChange={ emailSetState }
+        onChange={ (e) => setEmail(e.target.value) }
       />
       <input
         type="password"
         data-testid="password-input"
         value={ password }
-        onChange={ passwordSetState }
+        onChange={ (e) => setPassword(e.target.value) }
       />
       <button
         type="button"
@@ -57,8 +51,6 @@ function TelaLogin({ history }) {
       >
         Entrar
       </button>
-      {/* {console.log(email)} */}
-      {/* {console.log(password)} */}
     </form>
   );
 }
