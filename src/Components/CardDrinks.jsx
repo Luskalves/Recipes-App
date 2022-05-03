@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import ReceitasApp from '../context/ReceitasApp';
 import openApiDrinks from './Api/openApiDrinks';
 import drinkCategoryCardApi from './Api/drinkCategoryCardApi';
+import categoryDrinksApi from './Api/categoryDrinksApi';
 
 function CardDrinks() {
   const MAX_CARDS = 12;
@@ -20,6 +21,12 @@ function CardDrinks() {
     });
   }
 
+  function filterByCategory({ target }) {
+    categoryDrinksApi(target.value).then((result) => {
+      setDrinks(result);
+    });
+  }
+
   useEffect(() => {
     btnCategory();
     openApiDrinks().then((result) => {
@@ -33,7 +40,9 @@ function CardDrinks() {
         <button
           key={ index }
           type="button"
+          value={ value.strCategory }
           data-testid={ `${value.strCategory}-category-filter` }
+          onClick={ filterByCategory }
         >
           { value.strCategory }
         </button>
