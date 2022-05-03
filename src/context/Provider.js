@@ -8,6 +8,8 @@ function Provider({ children }) {
   const [searchInput, setSearchInput] = useState('');
   const [teste, setTeste] = useState([]);
   const [drinks, setDrinks] = useState([]);
+  const [categoryBtn, setcategoryBtn] = useState(false);
+  const [recipeDetail, setRecipeDetail] = useState(null);
 
   const contextValue = {
     email,
@@ -20,6 +22,10 @@ function Provider({ children }) {
     setTeste,
     drinks,
     setDrinks,
+    categoryBtn,
+    setcategoryBtn,
+    recipeDetail,
+    setRecipeDetail,
   };
 
   return (
