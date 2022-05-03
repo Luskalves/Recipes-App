@@ -1,0 +1,8 @@
+.card-img {
+  max-width: 120px;
+}
+
+.footer {
+  bottom: 0;
+  position: fixed;
+}
