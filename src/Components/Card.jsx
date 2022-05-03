@@ -1,13 +1,37 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import ReceitasApp from '../context/ReceitasApp';
+import foodCategoryCardApi from './Api/foodCategoryCardApi';
 
-function Card() {
+function Card({ componente }) {
   const MAX_CARDS = 12;
   const {
     filterSearchOption,
   } = useContext(ReceitasApp);
+  const [categoryOptions, setCategoryOptions] = useState([]);
+
+  function btnCategory() {
+    if (componente === 'Foods') {
+      foodCategoryCardApi().then((result) => {
+        setCategoryOptions(result);
+      });
+    }
+  }
+
+  useEffect(() => {
+    btnCategory();
+  }, []);
+
   return (
     <div>
+      { !categoryOptions ? '' : categoryOptions.map((value, index) => (
+        <button
+          key={ index }
+          type="button"
+          data-testid={ `${value.strCategory}-category-filter` }
+        >
+          { value.strCategory }
+        </button>
+      ))}
       {filterSearchOption.slice(0, MAX_CARDS)
         .map((value, index) => (
           <div

@@ -24,12 +24,12 @@ function SearchBar({ history, componente }) {
       if (filterSearchOption.length === 1) {
         history.push(`/drinks/${filterSearchOption[0].idDrink}`);
       }
-      return <Card />;
+      return <Card componente="Drinks" />;
     }
     if (filterSearchOption.length === 1) {
       history.push(`/foods/${filterSearchOption[0].idMeal}`);
     }
-    return <Card />;
+    return <Card componente="Foods" />;
   }
 
   function alertGlobal(result) {
