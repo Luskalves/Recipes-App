@@ -1,25 +1,27 @@
-import React, { useContext, useEffect, useState } from 'react';
-import ReceitasApp from '../context/ReceitasApp';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+// import ReceitasApp from '../context/ReceitasApp';
+import findFoodById from '../Components/Api/findFoodById';
 
-function DetailsFood() {
-  const { recipeDetail } = useContext(ReceitasApp);
+function DetailsFood({ match: { params: { id } } }) {
+  // const { recipeDetail } = useContext(ReceitasApp);
   const [lista, setLista] = useState(null);
-  const [recipe, setRecipe] = useState('');
+  const [recipe, setRecipe] = useState([]);
 
   function filtro() {
-    const test = Object.entries(recipeDetail);
+    const test = Object.entries(recipe);
     const listaIngredientes = test.filter((value) => value[0].includes('strIngredient'));
     const listaIngredientes2 = listaIngredientes.filter((value) => value[1] !== '');
-    console.log(listaIngredientes2);
     return listaIngredientes2;
   }
 
   useEffect(() => {
+    findFoodById(id).then((response) => setRecipe(response));
     setLista(filtro());
-    setRecipe(recipeDetail);
+    console.log('recipe', recipe);
   }, []);
 
-  function teste() {
+  function renderIngredient() {
     return lista.map((value, idx) => (
       <div
         key={ idx }
@@ -34,7 +36,6 @@ function DetailsFood() {
 
   return (
     <div>
-      {/* <button type="button" onClick={ () => teste() }> teste </button> */}
       <h1 data-testid="recipe-title">{recipe.strMeal}</h1>
       <img
         src={ recipe.strMealThumb }
@@ -49,7 +50,7 @@ function DetailsFood() {
         { recipe.category }
       </span>
 
-      {lista ? teste() : ''}
+      {lista ? renderIngredient() : ''}
 
       <span>{ recipe.strInstructions}</span>
 
@@ -77,5 +78,9 @@ function DetailsFood() {
     </div>
   );
 }
+
+DetailsFood.propTypes = {
+  match: PropTypes.shape(Object).isRequired,
+};
 
 export default DetailsFood;
