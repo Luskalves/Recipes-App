@@ -46,6 +46,7 @@ function Card() {
     openApi().then((result) => {
       setTeste(result);
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // function sendToCardDetails({ target }) {
