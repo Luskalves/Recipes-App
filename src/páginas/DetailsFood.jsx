@@ -6,7 +6,7 @@ function DetailsFood() {
   // console.log('recipeS:', recipeDetail);
   return (
     <div>
-      <h1 data-testid="recipe-title">{recipeDetail.strMeal}</h1>
+      <h1 data-testid="recipe-title">{console.log(recipeDetail.strMeal)}</h1>
       <img
         src={ recipeDetail.strMealThumb }
         alt={ recipeDetail.strMeal }
