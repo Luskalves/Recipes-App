@@ -7,7 +7,7 @@ function ProfileComponent({ history }) {
 
   useEffect(() => {
     if (result !== null) {
-      console.log('entrou');
+      // console.log('entrou');
       const { email } = JSON.parse(result); // transforma de string para objj
       setCheckEmail(email);
     }

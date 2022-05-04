@@ -26,6 +26,7 @@ function DetailsFood({ match: { params: { id } } }) {
     });
     setLista(filtro());
     console.log('recipe', recipe);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isNull]);
 
   function renderIngredient() {

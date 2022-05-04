@@ -42,6 +42,7 @@ function CardDrinks() {
     openApiDrinks().then((result) => {
       setDrinks(result);
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
