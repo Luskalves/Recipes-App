@@ -20,20 +20,16 @@ function DetailsFood() {
   }, []);
 
   function teste() {
-    console.log('foi');
-    if (lista !== null) {
-      return lista.map((value, idx) => (
-        <div
-          key={ idx }
-          data-testid={ `${idx}-ingredient-name-and-measure` }
-        >
-          {console.log(idx)}
-          <p>
-            {value[1]}
-          </p>
-        </div>
-      ));
-    }
+    return lista.map((value, idx) => (
+      <div
+        key={ idx }
+        data-testid={ `${idx}-ingredient-name-and-measure` }
+      >
+        <p>
+          {value[1]}
+        </p>
+      </div>
+    ));
   }
 
   return (
@@ -53,7 +49,7 @@ function DetailsFood() {
         { recipe.category }
       </span>
 
-      {teste()}
+      {lista ? teste() : ''}
 
       <span>{ recipe.strInstructions}</span>
 

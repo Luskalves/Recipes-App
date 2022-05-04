@@ -9,7 +9,7 @@ function Provider({ children }) {
   const [teste, setTeste] = useState([]);
   const [drinks, setDrinks] = useState([]);
   const [categoryBtn, setcategoryBtn] = useState(false);
-  const [recipeDetail, setRecipeDetail] = useState(null);
+  const [recipeDetail, setRecipeDetail] = useState([]);
 
   const contextValue = {
     email,
