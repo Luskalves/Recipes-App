@@ -7,19 +7,26 @@ function DetailsFood({ match: { params: { id } } }) {
   // const { recipeDetail } = useContext(ReceitasApp);
   const [lista, setLista] = useState(null);
   const [recipe, setRecipe] = useState([]);
+  const [isNull, setIsNull] = useState(true);
 
   function filtro() {
-    const test = Object.entries(recipe);
-    const listaIngredientes = test.filter((value) => value[0].includes('strIngredient'));
-    const listaIngredientes2 = listaIngredientes.filter((value) => value[1] !== '');
-    return listaIngredientes2;
+    if (!isNull) {
+      const test = Object.entries(recipe);
+      const listaIngredientes = test
+        .filter((value) => value[0].includes('strIngredient'));
+      const listaIngredientes2 = listaIngredientes.filter((value) => value[1] !== '');
+      return listaIngredientes2;
+    }
   }
 
   useEffect(() => {
-    findFoodById(id).then((response) => setRecipe(response));
+    findFoodById(id).then((response) => {
+      setRecipe(response);
+      setIsNull(false);
+    });
     setLista(filtro());
     console.log('recipe', recipe);
-  }, []);
+  }, [isNull]);
 
   function renderIngredient() {
     return lista.map((value, idx) => (
@@ -52,7 +59,18 @@ function DetailsFood({ match: { params: { id } } }) {
 
       {lista ? renderIngredient() : ''}
 
-      <span>{ recipe.strInstructions}</span>
+      <span data-testid="instructions">{ recipe.strInstructions}</span>
+
+      {/* {console.log('aaaaaaa', recipe.strYoutube)} */}
+      <iframe
+        src={ recipe.strYoutube }
+        data-testid="video"
+        title="YouTube video player"
+        frameBorder="0"
+        allow="accelerometer;
+        autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      />
 
       <div>
         <button
@@ -74,6 +92,8 @@ function DetailsFood({ match: { params: { id } } }) {
         >
           start recipe
         </button>
+
+        <div data-testid="0-recomendation-card"> card </div>
       </div>
     </div>
   );
