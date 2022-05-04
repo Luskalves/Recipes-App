@@ -3,7 +3,7 @@ import ReceitasApp from '../context/ReceitasApp';
 
 function DetailsFood() {
   const { recipeDetail } = useContext(ReceitasApp);
-  console.log('recipeS:', recipeDetail);
+  // console.log('recipeS:', recipeDetail);
   return (
     <div>
       <h1 data-testid="recipe-title">{recipeDetail.strMeal}</h1>
