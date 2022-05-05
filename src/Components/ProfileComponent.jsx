@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 function ProfileComponent({ history }) {
   const result = localStorage.getItem('user');
-  const { email } = JSON.parse(result); // transforma de string para obj
+  const [checkEmail, setCheckEmail] = useState('');
 
+  useEffect(() => {
+    if (result !== null) {
+      // console.log('entrou');
+      const { email } = JSON.parse(result); // transforma de string para objj
+      setCheckEmail(email);
+    }
+  }, [result]);
   function redirect({ target }) {
     switch (target.name) {
     case 'done':
@@ -23,7 +30,7 @@ function ProfileComponent({ history }) {
 
   return (
     <div>
-      <h3 data-testid="profile-email">{email}</h3>
+      <h3 data-testid="profile-email">{ checkEmail }</h3>
       <button
         type="button"
         data-testid="profile-done-btn"
