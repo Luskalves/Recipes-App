@@ -32,6 +32,15 @@ function DetailsDrinks({ match: { params: { id } } }) {
       return listaIngredientes2;
     }
   }
+  useEffect(() => {
+    findDrinkById(id).then((response) => {
+      setRecipe(response);
+      setIsNull(false);
+    });
+    setLista(filtro());
+    console.log('recipe', recipe);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isNull]);
 
   function renderIngredient() {
     return lista.map((value, idx) => (
