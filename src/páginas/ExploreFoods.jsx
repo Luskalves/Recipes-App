@@ -1,9 +1,24 @@
+import React, { useContext, useEffect } from 'react';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
+import randomFood from '../Components/Api/randomFood';
+import ReceitasApp from '../context/ReceitasApp';
 
 function ExploreFoods({ history }) {
+  const { setAleatoria, aleatoria } = useContext(ReceitasApp);
+
+  useEffect(() => {
+    randomFood().then((response) => {
+      setAleatoria(response);
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+
+function ExploreFoods({ history }) {
+
   return (
     <div>
       <Header componente="Explore Foods" />
@@ -30,6 +45,9 @@ function ExploreFoods({ history }) {
       <button
         type="button"
         data-testid="explore-surprise"
+        onClick={ () => {
+          history.push(`/foods/${aleatoria.idMeal}`);
+        } }
         onClick={ () => { } }
         value="explore-surprise"
       >
