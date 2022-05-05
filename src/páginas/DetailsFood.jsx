@@ -6,6 +6,7 @@ import findFoodById from '../Components/Api/findFoodById';
 function DetailsFood({ match: { params: { id } } }) {
   // const { recipeDetail } = useContext(ReceitasApp);
   const [lista, setLista] = useState(null);
+  const [listaMeasure, setMeasure] = useState(null);
   const [recipe, setRecipe] = useState([]);
   const [isNull, setIsNull] = useState(true);
 
@@ -19,12 +20,23 @@ function DetailsFood({ match: { params: { id } } }) {
     }
   }
 
+  function filtroMeasure() {
+    if (!isNull) {
+      const test = Object.entries(recipe);
+      const listaIngredientes = test
+        .filter((value) => value[0].includes('strMeasure'));
+      const listaIngredientes2 = listaIngredientes.filter((value) => value[1] !== '');
+      return listaIngredientes2;
+    }
+  }
+
   useEffect(() => {
     findFoodById(id).then((response) => {
       setRecipe(response);
       setIsNull(false);
     });
     setLista(filtro());
+    setMeasure(filtroMeasure());
     console.log('recipe', recipe);
   }, [isNull]);
 
@@ -32,6 +44,19 @@ function DetailsFood({ match: { params: { id } } }) {
     return lista.map((value, idx) => (
       <div
         key={ idx }
+        data-testid={ `${idx}-ingredient-name-and-measure` }
+      >
+        <p>
+          {value[1]}
+        </p>
+      </div>
+    ));
+  }
+
+  function renderMeasure() {
+    return listaMeasure.map((value, idx) => (
+      <div
+        key={ value }
         data-testid={ `${idx}-ingredient-name-and-measure` }
       >
         <p>
@@ -54,10 +79,11 @@ function DetailsFood({ match: { params: { id } } }) {
       <span
         data-testid="recipe-category"
       >
-        { recipe.category }
+        { recipe.strCategory }
       </span>
 
       {lista ? renderIngredient() : ''}
+      {listaMeasure ? renderMeasure() : ''}
 
       <span data-testid="instructions">{ recipe.strInstructions}</span>
 
