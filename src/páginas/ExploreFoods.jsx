@@ -20,7 +20,9 @@ function ExploreFoods({ history }) {
       <button
         type="button"
         data-testid="explore-by-nationality"
-        onClick={ () => {} }
+        onClick={ () => {
+          history.push('/explore/foods/nationalities');
+        } }
         value="explore-by-nationality"
       >
         By Nationality
@@ -28,9 +30,7 @@ function ExploreFoods({ history }) {
       <button
         type="button"
         data-testid="explore-surprise"
-        onClick={ () => {
-          history.push('"/explore/foods/nationalities"');
-        } }
+        onClick={ () => { } }
         value="explore-surprise"
       >
         Surprise me!
