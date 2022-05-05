@@ -1,8 +1,7 @@
 .recomendation-card {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  
+  flex-flow: wrap;
 }
 
 .card {
@@ -15,6 +14,6 @@
 }
 
 .start-button {
-  position: fixed;
   bottom: 0;
+  position: fixed;
 }
