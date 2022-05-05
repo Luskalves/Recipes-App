@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 // import ReceitasApp from '../context/ReceitasApp';
 import findDrinkById from '../Components/Api/findDrinkById';
 import getFoodsApi from '../Components/Api/getFoodsApi';
+import '../css/Details.css';
 
 function DetailsDrinks({ match: { params: { id } } }) {
   // const { recipeDetail } = useContext(ReceitasApp);
@@ -10,6 +11,7 @@ function DetailsDrinks({ match: { params: { id } } }) {
   const [listaMeasure, setMeasure] = useState(null);
   const [recipe, setRecipe] = useState([]);
   const [isNull, setIsNull] = useState(true);
+  const [recomendations, setRecomendations] = useState([]);
 
   function filtro() {
     if (!isNull) {
@@ -30,17 +32,6 @@ function DetailsDrinks({ match: { params: { id } } }) {
       return listaIngredientes2;
     }
   }
-
-  useEffect(() => {
-    findDrinkById(id).then((response) => {
-      setRecipe(response);
-      setIsNull(false);
-    });
-    setLista(filtro());
-    setMeasure(filtroMeasure());
-    getFoodsApi();
-    console.log('recipe', recipe);
-  }, [isNull]);
 
   function renderIngredient() {
     return lista.map((value, idx) => (
@@ -68,6 +59,46 @@ function DetailsDrinks({ match: { params: { id } } }) {
     ));
   }
 
+  function renderRecomendations() {
+    const MAX_RECOMENDATIONS = 6;
+    const listFilteredFood = [];
+    recomendations.filter((food, idx) => {
+      if (idx < MAX_RECOMENDATIONS) {
+        listFilteredFood.push(food);
+      }
+      return listFilteredFood;
+    });
+    console.log('filtered: ', listFilteredFood);
+    if (recomendations) {
+      return listFilteredFood.map((food, idx) => (
+        <div
+          key={ idx }
+          className="card"
+          data-testid={ `${idx}-recomendation-card` }
+        >
+          <img
+            src={ food.strMealThumb }
+            alt={ food.strMeal }
+            className="recomendation-card-image"
+          />
+          {food.strMeal}
+        </div>
+      ));
+    }
+  }
+
+  useEffect(() => {
+    findDrinkById(id).then((response) => {
+      setRecipe(response);
+      setIsNull(false);
+    });
+    setLista(filtro());
+    setMeasure(filtroMeasure());
+    getFoodsApi().then((response) => {
+      setRecomendations(response);
+    });
+  }, [isNull]);
+
   return (
     <div>
       <h1 data-testid="recipe-title">{recipe.strDrink}</h1>
@@ -75,7 +106,7 @@ function DetailsDrinks({ match: { params: { id } } }) {
         src={ recipe.strDrinkThumb }
         alt={ recipe.strDrink }
         height="150px"
-        width="150"
+        width="150px"
         data-testid="recipe-photo"
       />
       <span
@@ -103,15 +134,19 @@ function DetailsDrinks({ match: { params: { id } } }) {
           favorite
         </button>
 
-        <button
-          type="button"
-          data-testid="start-recipe-btn"
-        >
-          start recipe
-        </button>
-
-        <div data-testid="0-recomendation-card"> card </div>
       </div>
+
+      <div className="recomendation-card">
+        {renderRecomendations()}
+      </div>
+
+      <button
+        type="button"
+        className="start-button"
+        data-testid="start-recipe-btn"
+      >
+        start recipe
+      </button>
     </div>
   );
 }

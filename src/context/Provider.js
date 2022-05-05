@@ -11,6 +11,11 @@ function Provider({ children }) {
   const [categoryBtn, setcategoryBtn] = useState(false);
   const [recipeDetail, setRecipeDetail] = useState([]);
 
+  const [recipeStarted, setRecipeStarted] = useState(null);
+  localStorage.setItem('doneRecipes', false);
+  const recipeStartedFalse = JSON.parse(localStorage.getItem('doneRecipes'));
+  // setRecipeStarted('recipeStartedFalse');
+
   const contextValue = {
     email,
     searchInput,
@@ -26,6 +31,9 @@ function Provider({ children }) {
     setcategoryBtn,
     recipeDetail,
     setRecipeDetail,
+    recipeStarted,
+    setRecipeStarted,
+    recipeStartedFalse,
   };
 
   return (
