@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 // import ReceitasApp from '../context/ReceitasApp';
 import findFoodById from '../Components/Api/findFoodById';
+import getDrinksApi from '../Components/Api/getDrinksApi';
 
 function DetailsFood({ match: { params: { id } } }) {
   // const { recipeDetail } = useContext(ReceitasApp);
@@ -37,6 +38,7 @@ function DetailsFood({ match: { params: { id } } }) {
     });
     setLista(filtro());
     setMeasure(filtroMeasure());
+    getDrinksApi();
     console.log('recipe', recipe);
   }, [isNull]);
 
