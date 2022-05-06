@@ -1,24 +1,70 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ReceitasApp from '../context/ReceitasApp';
 import shareIcon from '../images/shareIcon.svg';
 
 function DoneRecipesComponent() {
   const { doneRecipes } = useContext(ReceitasApp);
+  const [filterRecipes, setfilterRecipes] = useState([]);
 
-  // link precisa ser /food/id da receita
+  useEffect(() => {
+    setfilterRecipes(doneRecipes);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function filterSet({ target }) {
+    // console.log(doneRecipes.filter((value) => value.type === 'foods'));
+    let filtro = '';
+    switch (target.name) {
+    case 'foods':
+      filtro = doneRecipes.filter((value) => value.type === 'foods');
+      setfilterRecipes(filtro);
+      break;
+    case 'drinks':
+      filtro = doneRecipes.filter((value) => value.type === 'drinks');
+      setfilterRecipes(filtro);
+      break;
+    case 'all':
+      filtro = doneRecipes;
+      setfilterRecipes(filtro);
+      break;
+    default: return '';
+    }
+  }
+
   async function copyLink({ target }) {
     const { id } = target;
-    await navigator.clipboard.writeText(`http://localhost:3000/foods/${id}`); // Salva no atalho do usuario o texto. Referencia retirada do site https://www.w3schools.com/howto/howto_js_copy_clipboard.asp
+    await navigator.clipboard.writeText(`http://localhost:3000/foods/${id}`); // Salva no atalho (ctrl+v) do usuario o texto. Referencia retirada do site https://www.w3schools.com/howto/howto_js_copy_clipboard.asp
     // global.alert('Link copied!');
   }
 
   return (
     <>
-      <button type="button" data-testid="filter-by-all-btn">All</button>
-      <button type="button" data-testid="filter-by-food-btn">Food</button>
-      <button type="button" data-testid="filter-by-drink-btn">Drinks</button>
-      { doneRecipes.map((value, index) => (
+      <button
+        type="button"
+        data-testid="filter-by-all-btn"
+        name="all"
+        onClick={ filterSet }
+      >
+        All
+      </button>
+      <button
+        type="button"
+        name="foods"
+        data-testid="filter-by-food-btn"
+        onClick={ filterSet }
+      >
+        Food
+      </button>
+      <button
+        type="button"
+        name="drinks"
+        data-testid="filter-by-drink-btn"
+        onClick={ filterSet }
+      >
+        Drinks
+      </button>
+      { filterRecipes.map((value, index) => (
         <div key={ value.id }>
           <Link to={ `/${value.type}/${value.id}` }>
             <img
