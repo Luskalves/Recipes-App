@@ -1,0 +1,19 @@
+.recomendation-card {
+  display: flex;
+  flex-flow: wrap;
+  flex-direction: row;
+}
+
+.card {
+  margin-bottom: 50px;
+}
+
+.recomendation-card-image {
+  height: 150px;
+  width: 150px;
+}
+
+.start-button {
+  bottom: 0;
+  position: fixed;
+}

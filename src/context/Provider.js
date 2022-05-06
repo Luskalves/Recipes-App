@@ -35,6 +35,7 @@ function Provider({ children }) {
     },
   ]);
 
+  localStorage.setItem('doneRecipes', false);
   const [aleatoria, setAleatoria] = useState([]);
   const [aleatoriaDrink, setAleatoriaDrink] = useState([]);
 

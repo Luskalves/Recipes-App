@@ -1,6 +1,4 @@
-
 import React, { useContext, useEffect } from 'react';
-import React from 'react';
 import PropTypes from 'prop-types';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
@@ -16,8 +14,6 @@ function ExploreDrinks({ history }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
-function ExploreDrinks({ history }) {
   return (
     <div>
       <Header componente="Explore Drinks" />
@@ -34,13 +30,10 @@ function ExploreDrinks({ history }) {
       <button
         type="button"
         data-testid="explore-surprise"
-
+        value="explore-surprise"
         onClick={ () => {
           history.push(`/drinks/${aleatoriaDrink.idDrink}`);
         } }
-        onClick={ () => {} }
-
-        value="explore-surprise"
       >
         Surprise me!
       </button>
