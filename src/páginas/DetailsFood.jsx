@@ -55,7 +55,9 @@ function DetailsFood({ match: { params: { id } } }) {
             alt={ food.strDrink }
             className="recomendation-card-image"
           />
-          {food.strMeal}
+          <span data-testid={ `${idx}-recomendation-title` }>
+            {food.strDrink}
+          </span>
         </div>
       ));
     }
@@ -165,11 +167,12 @@ function DetailsFood({ match: { params: { id } } }) {
           favorite
         </button>
 
-        <div data-testid="0-recomendation-card"> card </div>
       </div>
 
-      <div>
-        {renderRecomendations()}
+      <div className="recomendation-card">
+        <div className="cards">
+          {renderRecomendations()}
+        </div>
       </div>
 
       {
