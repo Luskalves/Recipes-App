@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-// import ReceitasApp from '../context/ReceitasApp';
 import findFoodById from '../Components/Api/findFoodById';
+import getDrinksApi from '../Components/Api/getDrinksApi';
+import '../css/Details.css';
+// import ReceitasApp from '../context/ReceitasApp';
 
 function DetailsFood({ match: { params: { id } } }) {
-  // const { recipeDetail } = useContext(ReceitasApp);
+  // const { recipeStarted } = useContext(ReceitasApp);
   const [lista, setLista] = useState(null);
+  const [listaMeasure, setMeasure] = useState(null);
   const [recipe, setRecipe] = useState([]);
   const [isNull, setIsNull] = useState(true);
+  const [recomendations, setRecomendations] = useState([]);
+  const [recipeStorage, setRecipeStorage] = useState(null);
 
   function filtro() {
     if (!isNull) {
@@ -19,15 +24,57 @@ function DetailsFood({ match: { params: { id } } }) {
     }
   }
 
+  function filtroMeasure() {
+    if (!isNull) {
+      const test = Object.entries(recipe);
+      const listaIngredientes = test
+        .filter((value) => value[0].includes('strMeasure'));
+      const listaIngredientes2 = listaIngredientes.filter((value) => value[1] !== '');
+      return listaIngredientes2;
+    }
+  }
+
+  function renderRecomendations() {
+    const MAX_RECOMENDATIONS = 6;
+    const listFilteredFood = [];
+    recomendations.filter((food, idx) => {
+      if (idx < MAX_RECOMENDATIONS) {
+        listFilteredFood.push(food);
+      }
+      return listFilteredFood;
+    });
+    if (recomendations) {
+      return listFilteredFood.map((food, idx) => (
+        <div
+          key={ idx }
+          className="card"
+          data-testid={ `${idx}-recomendation-card` }
+        >
+          <img
+            src={ food.strDrinkThumb }
+            alt={ food.strDrink }
+            className="recomendation-card-image"
+          />
+          {food.strMeal}
+        </div>
+      ));
+    }
+  }
+
   useEffect(() => {
+    console.log(recipeStorage);
+    setRecipeStorage(JSON.parse(localStorage.getItem('doneRecipes')));
     findFoodById(id).then((response) => {
       setRecipe(response);
       setIsNull(false);
     });
     setLista(filtro());
-    console.log('recipe', recipe);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isNull]);
+    setMeasure(filtroMeasure());
+    getDrinksApi().then((response) => {
+      setRecomendations(response);
+    });
+    console.log(recipeStorage);
+  }, [isNull, recipeStorage]);
 
   function renderIngredient() {
     return lista.map((value, idx) => (
@@ -40,6 +87,37 @@ function DetailsFood({ match: { params: { id } } }) {
         </p>
       </div>
     ));
+  }
+
+  function renderMeasure() {
+    return listaMeasure.map((value, idx) => (
+      <div
+        key={ value }
+        data-testid={ `${idx}-ingredient-name-and-measure` }
+      >
+        <p>
+          {value[1]}
+        </p>
+      </div>
+    ));
+  }
+
+  function changeLocalStorage() {
+    localStorage.setItem('doneRecipes', true);
+    setRecipeStorage(true);
+  }
+
+  function renderStartButton() {
+    return (
+      <button
+        type="button"
+        className="start-button"
+        data-testid="start-recipe-btn"
+        onClick={ () => changeLocalStorage() }
+      >
+        start recipe
+      </button>
+    );
   }
 
   return (
@@ -55,14 +133,14 @@ function DetailsFood({ match: { params: { id } } }) {
       <span
         data-testid="recipe-category"
       >
-        { recipe.category }
+        { recipe.strCategory }
       </span>
 
       {lista ? renderIngredient() : ''}
+      {listaMeasure ? renderMeasure() : ''}
 
       <span data-testid="instructions">{ recipe.strInstructions}</span>
 
-      {/* {console.log('aaaaaaa', recipe.strYoutube)} */}
       <iframe
         src={ recipe.strYoutube }
         data-testid="video"
@@ -87,15 +165,16 @@ function DetailsFood({ match: { params: { id } } }) {
           favorite
         </button>
 
-        <button
-          type="button"
-          data-testid="start-recipe-btn"
-        >
-          start recipe
-        </button>
-
         <div data-testid="0-recomendation-card"> card </div>
       </div>
+
+      <div>
+        {renderRecomendations()}
+      </div>
+
+      {
+        recipeStorage ? '' : renderStartButton()
+      }
     </div>
   );
 }

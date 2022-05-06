@@ -10,6 +10,7 @@ function Provider({ children }) {
   const [drinks, setDrinks] = useState([]);
   const [categoryBtn, setcategoryBtn] = useState(false);
   const [recipeDetail, setRecipeDetail] = useState([]);
+  localStorage.setItem('doneRecipes', false);
   const [aleatoria, setAleatoria] = useState([]);
   const [aleatoriaDrink, setAleatoriaDrink] = useState([]);
 
