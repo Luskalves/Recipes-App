@@ -83,7 +83,6 @@ function DoneRecipesComponent() {
           <p data-testid={ `${index}-horizontal-done-date` }>{value.doneDate}</p>
           <button
             type="button"
-            data-testid={ `${index}-horizontal-share-btn` }
             onClick={ (event) => {
               copyLink(event);
               global.alert('Link copied!');
@@ -92,6 +91,7 @@ function DoneRecipesComponent() {
             <img
               src={ shareIcon }
               alt="profile"
+              data-testid={ `${index}-horizontal-share-btn` }
               id={ value.id }
             />
           </button>
