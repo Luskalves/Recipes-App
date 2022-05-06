@@ -6,6 +6,7 @@ import shareIcon from '../images/shareIcon.svg';
 function DoneRecipesComponent() {
   const { doneRecipes } = useContext(ReceitasApp);
   const [filterRecipes, setfilterRecipes] = useState([]);
+  const [spamAlert, setSpamAlert] = useState('');
 
   useEffect(() => {
     setfilterRecipes(doneRecipes);
@@ -35,7 +36,7 @@ function DoneRecipesComponent() {
   async function copyLink({ target }) {
     const { id } = target;
     await navigator.clipboard.writeText(`http://localhost:3000/foods/${id}`); // Salva no atalho (ctrl+v) do usuario o texto. Referencia retirada do site https://www.w3schools.com/howto/howto_js_copy_clipboard.asp
-    // global.alert('Link copied!');
+    setSpamAlert('Link copied!');
   }
 
   return (
@@ -85,7 +86,6 @@ function DoneRecipesComponent() {
             type="button"
             onClick={ (event) => {
               copyLink(event);
-              global.alert('Link copied!');
             } }
           >
             <img
@@ -103,6 +103,7 @@ function DoneRecipesComponent() {
               {valor}
             </p>
           ))}
+          {spamAlert}
         </div>
       )) }
     </>
