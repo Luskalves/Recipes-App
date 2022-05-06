@@ -35,6 +35,9 @@ function Provider({ children }) {
     },
   ]);
 
+  const [aleatoria, setAleatoria] = useState([]);
+  const [aleatoriaDrink, setAleatoriaDrink] = useState([]);
+
   const contextValue = {
     email,
     searchInput,
@@ -52,6 +55,10 @@ function Provider({ children }) {
     setRecipeDetail,
     doneRecipes,
     setDoneRecipes,
+    aleatoria,
+    setAleatoria,
+    setAleatoriaDrink,
+    aleatoriaDrink,
   };
 
   return (
