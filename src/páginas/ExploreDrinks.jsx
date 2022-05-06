@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
+import randomDrink from '../Components/Api/randomDrinks';
+import ReceitasApp from '../context/ReceitasApp';
 
 function ExploreDrinks({ history }) {
+  const { aleatoriaDrink, setAleatoriaDrink } = useContext(ReceitasApp);
+  useEffect(() => {
+    randomDrink().then((response) => {
+      setAleatoriaDrink(response);
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div>
       <Header componente="Explore Drinks" />
@@ -20,8 +30,10 @@ function ExploreDrinks({ history }) {
       <button
         type="button"
         data-testid="explore-surprise"
-        onClick={ () => {} }
         value="explore-surprise"
+        onClick={ () => {
+          history.push(`/drinks/${aleatoriaDrink.idDrink}`);
+        } }
       >
         Surprise me!
       </button>

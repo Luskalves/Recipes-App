@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 // import ReceitasApp from '../context/ReceitasApp';
 import findDrinkById from '../Components/Api/findDrinkById';
+import getFoodsApi from '../Components/Api/getFoodsApi';
+import '../css/Details.css';
 
 function DetailsDrinks({ match: { params: { id } } }) {
   // const { recipeDetail } = useContext(ReceitasApp);
   const [lista, setLista] = useState(null);
+  const [listaMeasure, setMeasure] = useState(null);
   const [recipe, setRecipe] = useState([]);
   const [isNull, setIsNull] = useState(true);
+  const [recomendations, setRecomendations] = useState([]);
 
   function filtro() {
     if (!isNull) {
@@ -19,6 +23,15 @@ function DetailsDrinks({ match: { params: { id } } }) {
     }
   }
 
+  function filtroMeasure() {
+    if (!isNull) {
+      const test = Object.entries(recipe);
+      const listaIngredientes = test
+        .filter((value) => value[0].includes('strMeasure'));
+      const listaIngredientes2 = listaIngredientes.filter((value) => value[1] !== '');
+      return listaIngredientes2;
+    }
+  }
   useEffect(() => {
     findDrinkById(id).then((response) => {
       setRecipe(response);
@@ -42,6 +55,59 @@ function DetailsDrinks({ match: { params: { id } } }) {
     ));
   }
 
+  function renderMeasure() {
+    return listaMeasure.map((value, idx) => (
+      <div
+        key={ value }
+        data-testid={ `${idx}-ingredient-name-and-measure` }
+      >
+        <p>
+          {value[1]}
+        </p>
+      </div>
+    ));
+  }
+
+  function renderRecomendations() {
+    const MAX_RECOMENDATIONS = 6;
+    const listFilteredFood = [];
+    recomendations.filter((food, idx) => {
+      if (idx < MAX_RECOMENDATIONS) {
+        listFilteredFood.push(food);
+      }
+      return listFilteredFood;
+    });
+    console.log('filtered: ', listFilteredFood);
+    if (recomendations) {
+      return listFilteredFood.map((food, idx) => (
+        <div
+          key={ idx }
+          className="card"
+          data-testid={ `${idx}-recomendation-card` }
+        >
+          <img
+            src={ food.strMealThumb }
+            alt={ food.strMeal }
+            className="recomendation-card-image"
+          />
+          {food.strMeal}
+        </div>
+      ));
+    }
+  }
+
+  useEffect(() => {
+    findDrinkById(id).then((response) => {
+      setRecipe(response);
+      setIsNull(false);
+    });
+    setLista(filtro());
+    setMeasure(filtroMeasure());
+    getFoodsApi().then((response) => {
+      setRecomendations(response);
+    });
+  }, [isNull]);
+
   return (
     <div>
       <h1 data-testid="recipe-title">{recipe.strDrink}</h1>
@@ -49,29 +115,19 @@ function DetailsDrinks({ match: { params: { id } } }) {
         src={ recipe.strDrinkThumb }
         alt={ recipe.strDrink }
         height="150px"
-        width="150"
+        width="150px"
         data-testid="recipe-photo"
       />
       <span
         data-testid="recipe-category"
       >
-        { recipe.category }
+        { recipe.strAlcoholic }
       </span>
 
       {lista ? renderIngredient() : ''}
+      {listaMeasure ? renderMeasure() : ''}
 
       <span data-testid="instructions">{ recipe.strInstructions}</span>
-
-      {/* {console.log('aaaaaaa', recipe.strYoutube)} */}
-      <iframe
-        src={ recipe.strYoutube }
-        data-testid="video"
-        title="YouTube video player"
-        frameBorder="0"
-        allow="accelerometer;
-        autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-      />
 
       <div>
         <button
@@ -87,15 +143,19 @@ function DetailsDrinks({ match: { params: { id } } }) {
           favorite
         </button>
 
-        <button
-          type="button"
-          data-testid="start-recipe-btn"
-        >
-          start recipe
-        </button>
-
-        <div data-testid="0-recomendation-card"> card </div>
       </div>
+
+      <div className="recomendation-card">
+        {renderRecomendations()}
+      </div>
+
+      <button
+        type="button"
+        className="start-button"
+        data-testid="start-recipe-btn"
+      >
+        start recipe
+      </button>
     </div>
   );
 }

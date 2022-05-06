@@ -35,6 +35,10 @@ function Provider({ children }) {
     },
   ]);
 
+  localStorage.setItem('doneRecipes', false);
+  const [aleatoria, setAleatoria] = useState([]);
+  const [aleatoriaDrink, setAleatoriaDrink] = useState([]);
+
   const contextValue = {
     email,
     searchInput,
@@ -52,6 +56,10 @@ function Provider({ children }) {
     setRecipeDetail,
     doneRecipes,
     setDoneRecipes,
+    aleatoria,
+    setAleatoria,
+    setAleatoriaDrink,
+    aleatoriaDrink,
   };
 
   return (
