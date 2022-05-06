@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import ReceitasApp from '../context/ReceitasApp';
 import shareIcon from '../images/shareIcon.svg';
 
@@ -19,21 +20,27 @@ function DoneRecipesComponent() {
       <button type="button" data-testid="filter-by-drink-btn">Drinks</button>
       { doneRecipes.map((value, index) => (
         <div key={ value.id }>
-          <img
-            src={ value.image }
-            alt={ value.name }
-            data-testid={ `${index}-horizontal-image` }
-            className="card-img"
-          />
+          <Link to={ `/${value.type}/${value.id}` }>
+            <img
+              src={ value.image }
+              alt={ value.name }
+              data-testid={ `${index}-horizontal-image` }
+              className="card-img"
+            />
+          </Link>
           <p data-testid={ `${index}-horizontal-top-text` }>{ value.category }</p>
-          <p data-testid={ `${index}-horizontal-name` }>{value.name}</p>
+          <Link to={ `/${value.type}/${value.id}` }>
+            <p data-testid={ `${index}-horizontal-name` }>
+              {value.name}
+            </p>
+          </Link>
           <p data-testid={ `${index}-horizontal-done-date` }>{value.doneDate}</p>
           <button
             type="button"
             data-testid={ `${index}-horizontal-share-btn` }
-            onClick={ (e) => {
+            onClick={ (event) => {
+              copyLink(event);
               global.alert('Link copied!');
-              copyLink(e);
             } }
           >
             <img
@@ -57,15 +64,3 @@ function DoneRecipesComponent() {
 }
 
 export default DoneRecipesComponent;
-
-// {
-//   id: '53050',
-//   type: 'comida',
-//   nationality: '',
-//   category: 'British - Dessert',
-//   alcoholicOrNot: '',
-//   name: 'Ayam Percik',
-//   image: 'https://www.themealdb.com/images/media/meals/020z181619788503.jpg',
-//   doneDate: 'Thu May 05 2022 18:17:39 GMT-0300 (Brasilia Standard Time)',
-//   tags: ['Soup', 'Test'],
-// },

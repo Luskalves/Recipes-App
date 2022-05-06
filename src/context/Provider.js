@@ -13,7 +13,7 @@ function Provider({ children }) {
   const [doneRecipes, setDoneRecipes] = useState([
     {
       id: '52771',
-      type: 'comida',
+      type: 'foods',
       nationality: '',
       category: 'Italian - Vegetarian',
       alcoholicOrNot: '',
@@ -23,8 +23,8 @@ function Provider({ children }) {
       tags: ['Pasta', 'Curry'],
     },
     {
-      id: '530501',
-      type: 'comida',
+      id: '52771',
+      type: 'drinks',
       nationality: '',
       category: 'Alcoholic',
       alcoholicOrNot: '',
