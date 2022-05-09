@@ -35,7 +35,7 @@ function DoneRecipesComponent() {
 
   async function copyLink({ target }) {
     const { id } = target;
-    await navigator.clipboard.writeText(`http://localhost:3000/foods/${id}`); // Salva no atalho (ctrl+v) do usuario o texto.   Referencia retirada do site https://www.w3schools.com/howto/howto_js_copy_clipboard.asp
+    await navigator.clipboard.writeText(`http://localhost:3000/foods/${id}`); // Salva no atalho (ctrl+v) do usuario o texto.    Referencia retirada do site https://www.w3schools.com/howto/howto_js_copy_clipboard.asp
     setSpamAlert('Link copied!');
   }
 
