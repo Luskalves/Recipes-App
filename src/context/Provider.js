@@ -12,6 +12,10 @@ function Provider({ children }) {
   const [recipeDetail, setRecipeDetail] = useState([]);
   const [aleatoria, setAleatoria] = useState([]);
   const [aleatoriaDrink, setAleatoriaDrink] = useState([]);
+  const [ingrediente, setIngrediente] = useState([]);
+  const [ingredienteDrink, setIngredienteDrink] = useState([]);
+  const [newIngredient, setNewIngredient] = useState('');
+  const [newIngFood, setNewIngFood] = useState('');
 
   const contextValue = {
     email,
@@ -32,6 +36,14 @@ function Provider({ children }) {
     setAleatoria,
     setAleatoriaDrink,
     aleatoriaDrink,
+    ingrediente,
+    setIngrediente,
+    ingredienteDrink,
+    setIngredienteDrink,
+    newIngredient,
+    setNewIngredient,
+    newIngFood,
+    setNewIngFood,
   };
 
   return (

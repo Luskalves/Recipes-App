@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ReceitasApp from '../context/ReceitasApp';
 import openApiDrinks from './Api/openApiDrinks';
+import ingredientDrinkApi from './Api/ingredientDrinkApi';
 import drinkCategoryCardApi from './Api/drinkCategoryCardApi';
 import categoryDrinksApi from './Api/categoryDrinksApi';
 
@@ -12,6 +13,7 @@ function CardDrinks() {
     drinks,
     setDrinks,
     setfilterSearchOption,
+    newIngredient,
   } = useContext(ReceitasApp);
 
   const [categoryDrinkOptions, setCategoryDrinkOptions] = useState([]);
@@ -37,12 +39,25 @@ function CardDrinks() {
     }
   }
 
+  async function hasIngredient() {
+    if (newIngredient !== '') {
+      await ingredientDrinkApi(newIngredient).then((result) => {
+        setDrinks(result);
+      });
+    } else {
+      await openApiDrinks().then((result) => {
+        setDrinks(result);
+      });
+    }
+  }
+
   useEffect(() => {
     btnCategory();
-    openApiDrinks().then((result) => {
-      setDrinks(result);
-    });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    hasIngredient();
+    // openApiDrinks().then((result) => {
+    //   setDrinks(result);
+    // });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -114,6 +129,7 @@ function CardDrinks() {
               </Link>
             </div>
           ))}
+      {/* {console.log(drinks)} */}
     </div>
   );
 }

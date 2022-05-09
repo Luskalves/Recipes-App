@@ -6,3 +6,7 @@
   bottom: 0;
   position: fixed;
 }
+
+.ing-img {
+  max-width: 120px;
+}

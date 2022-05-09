@@ -1,6 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ReceitasApp from '../context/ReceitasApp';
+import igredientSearchFetchApi from './Api/igredientSearchFetchApi';
+// import ingredienteApi from './Api/ingredienteApi';
 import foodCategoryCardApi from './Api/foodCategoryCardApi';
 import categoryFoodApi from './Api/categoryFoodApi';
 import openApi from './Api/openApi';
@@ -15,6 +17,8 @@ function Card() {
     // categoryBtn,
     setcategoryBtn,
     setRecipeDetail,
+    newIngFood,
+    // setNewIngFood,
   } = useContext(ReceitasApp);
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [foodButton, setFoodBtn] = useState('beef');
@@ -41,11 +45,28 @@ function Card() {
     }
   }
 
+  function newIngFoods() {
+    // console.log(newIngFood);
+    if (newIngFood !== '') {
+      console.log(newIngFood);
+      igredientSearchFetchApi(newIngFood).then((result) => {
+        setTeste(result);
+        // console.log(teste);
+      });
+    } else {
+      openApi().then((result) => {
+        setTeste(result);
+        console.log(teste);
+      });
+    }
+  }
+
   useEffect(() => {
     btnCategory();
-    openApi().then((result) => {
-      setTeste(result);
-    });
+    newIngFoods();
+    // openApi().then((result) => {
+    //   setTeste(result);
+    // });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -122,7 +143,6 @@ function Card() {
               </Link>
             </div>
           ))}
-      {/* { console.log(filterSearchOption) } */}
     </div>
   );
 }
