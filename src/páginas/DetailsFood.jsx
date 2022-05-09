@@ -6,13 +6,12 @@ import '../css/Details.css';
 // import ReceitasApp from '../context/ReceitasApp';
 
 function DetailsFood({ match: { params: { id } } }) {
-  // const { recipeStarted } = useContext(ReceitasApp);
   const [lista, setLista] = useState(null);
   const [listaMeasure, setMeasure] = useState(null);
   const [recipe, setRecipe] = useState([]);
   const [isNull, setIsNull] = useState(true);
   const [recomendations, setRecomendations] = useState([]);
-  const [recipeStorage, setRecipeStorage] = useState(null);
+  const [recipeStorage, setRecipeStorage] = useState(false);
 
   function filtro() {
     if (!isNull) {
@@ -55,15 +54,28 @@ function DetailsFood({ match: { params: { id } } }) {
             alt={ food.strDrink }
             className="recomendation-card-image"
           />
-          {food.strMeal}
+          <span data-testid={ `${idx}-recomendation-title` }>
+            {food.strDrink}
+          </span>
         </div>
       ));
     }
   }
 
+  function checkStorage() {
+    localStorage.clear();
+    localStorage.setItem('doneRecipes', recipe);
+    const startedStorage = localStorage.getItem('doneRecipes');
+    setRecipeStorage(false);
+    console.log(startedStorage);
+    // if (startedStorage.includes(recipe)) {
+    //   setRecipeStorage(true);
+    //   console.log('incluiu');
+    // }
+  }
+
   useEffect(() => {
-    console.log(recipeStorage);
-    setRecipeStorage(JSON.parse(localStorage.getItem('doneRecipes')));
+    checkStorage();
     findFoodById(id).then((response) => {
       setRecipe(response);
       setIsNull(false);
@@ -73,7 +85,6 @@ function DetailsFood({ match: { params: { id } } }) {
     getDrinksApi().then((response) => {
       setRecomendations(response);
     });
-    console.log(recipeStorage);
   }, [isNull, recipeStorage]);
 
   function renderIngredient() {
@@ -103,8 +114,7 @@ function DetailsFood({ match: { params: { id } } }) {
   }
 
   function changeLocalStorage() {
-    localStorage.setItem('doneRecipes', true);
-    setRecipeStorage(true);
+    console.log('clickou');
   }
 
   function renderStartButton() {
@@ -165,11 +175,12 @@ function DetailsFood({ match: { params: { id } } }) {
           favorite
         </button>
 
-        <div data-testid="0-recomendation-card"> card </div>
       </div>
 
-      <div>
-        {renderRecomendations()}
+      <div className="recomendation-card">
+        <div className="cards">
+          {renderRecomendations()}
+        </div>
       </div>
 
       {
