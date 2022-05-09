@@ -4,3 +4,5 @@ async function openApi() {
   return data.meals === null ? [] : data.meals;
 }
 export default openApi;
+
+// faz requisição para quando a página monta

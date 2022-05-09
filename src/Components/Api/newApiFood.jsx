@@ -6,7 +6,3 @@ async function igredientSearchFetchApi(value) {
 }
 
 export default igredientSearchFetchApi;
-
-// dá bom para o 77;
-
-// faz requisição por um ingrediente apenas

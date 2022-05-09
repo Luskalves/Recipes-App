@@ -30,10 +30,10 @@ function ExploreDrinks({ history }) {
       <button
         type="button"
         data-testid="explore-surprise"
-        value="explore-surprise"
         onClick={ () => {
           history.push(`/drinks/${aleatoriaDrink.idDrink}`);
         } }
+        value="explore-surprise"
       >
         Surprise me!
       </button>
