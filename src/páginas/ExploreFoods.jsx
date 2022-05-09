@@ -41,6 +41,7 @@ function ExploreFoods({ history }) {
       <button
         type="button"
         data-testid="explore-surprise"
+        value="explore-surprise"
         onClick={ () => {
           history.push(`/foods/${aleatoria.idMeal}`);
         } }
