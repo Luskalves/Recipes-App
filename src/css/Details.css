@@ -1,16 +1,25 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 5px;
+}
+
 .recomendation-card {
+  width: 100vw;
+}
+
+.cards {
   display: flex;
-  flex-flow: wrap;
-  flex-direction: row;
+  overflow-x: auto;
 }
 
 .card {
-  margin-bottom: 50px;
+  flex: none;
 }
 
 .recomendation-card-image {
   height: 150px;
-  width: 150px;
+  width: 175px;
 }
 
 .start-button {

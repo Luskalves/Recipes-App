@@ -77,7 +77,6 @@ function DetailsDrinks({ match: { params: { id } } }) {
       }
       return listFilteredFood;
     });
-    console.log('filtered: ', listFilteredFood);
     if (recomendations) {
       return listFilteredFood.map((food, idx) => (
         <div
@@ -90,7 +89,9 @@ function DetailsDrinks({ match: { params: { id } } }) {
             alt={ food.strMeal }
             className="recomendation-card-image"
           />
-          {food.strMeal}
+          <span data-testid={ `${idx}-recomendation-title` }>
+            {food.strMeal}
+          </span>
         </div>
       ));
     }
@@ -146,7 +147,9 @@ function DetailsDrinks({ match: { params: { id } } }) {
       </div>
 
       <div className="recomendation-card">
-        {renderRecomendations()}
+        <div className="cards">
+          {renderRecomendations()}
+        </div>
       </div>
 
       <button
