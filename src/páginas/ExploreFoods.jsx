@@ -45,7 +45,6 @@ function ExploreFoods({ history }) {
         onClick={ () => {
           history.push(`/foods/${aleatoria.idMeal}`);
         } }
-        value="explore-surprise"
       >
         Surprise me!
       </button>
