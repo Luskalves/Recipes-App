@@ -21,7 +21,7 @@ function ProfileComponent({ history }) {
       history.push('/favorite-recipes');
       break;
     case 'logout':
-      localStorage.clear('user');
+      localStorage.clear('doneRecipes');
       history.push('/');
       break;
     default: return '';
